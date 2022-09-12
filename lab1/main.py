@@ -13,22 +13,6 @@ class Point:
 	def __str__(self):
 		return f"({self.i+1}):{self.count}"
 
-def get_max(M: list) -> Point:
-	max_el = Point(0, 0)
-	for i in range(len(M)):
-		c = sum(M[i])
-		if c > max_el.count:
-			max_el = Point(i, c)
-	return max_el
-
-def get_min(M: list) -> Point:
-	max_el = Point(0, 0)
-	for i in range(len(M)):
-		c = sum(M[i])
-		if c < max_el.count:
-			max_el = Point(i, c)
-	return max_el
-
 
 def get_strict(M: list):
 	r = [i for i in [Mi for Mi in M]]
@@ -40,6 +24,27 @@ def get_strict(M: list):
 			if i != j and r[i][j] == 1 and r[j][i] == 1:
 				r[j][i] = 0
 	return r
+
+def get_max(M: list) -> Point:
+	max_el = Point(0, 0)
+	Ml = get_strict(M)
+	for i in range(len(Ml)):
+		c = sum(Ml[i])
+		if c > max_el.count:
+			max_el = Point(i, c)
+	return max_el
+
+def get_min(M: list) -> Point:
+	max_el = Point(0, 0)
+	Ml = get_strict(M)
+	for i in range(len(Ml)):
+		c = sum(Ml[i])
+		if c < max_el.count:
+			max_el = Point(i, c)
+	return max_el
+
+
+
 
 def get_addative(M: list):
 	for i in range(len(M)):
