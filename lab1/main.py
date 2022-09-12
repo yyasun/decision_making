@@ -29,14 +29,26 @@ def get_min(M: list) -> Point:
 			max_el = Point(i, c)
 	return max_el
 
-def get_reverse(M: list):
+
+def get_strict(M: list):
+	r = [i for i in [Mi for Mi in M]]
+	for i in range(len(M)): # antireflexive
+		r[i][i] = 0
+
+	for i in range(len(M)): # antisymmetrical
+		for j in range(len(M[i])):
+			if i != j and r[i][j] == 1 and r[j][i] == 1:
+				r[j][i] = 0
+	return r
+
+def get_addative(M: list):
 	for i in range(len(M)):
 		for j in range(len(M[i])):
 			M[i][j] = 0 if M[i][j] == 1 else 1
 	return M
 
-def get_addative(M: list):
-	return True
+def get_reverse(M: list):
+	return np.transpose(M)
 
 def is_reflexive(M: list) -> bool:
 	for i in range(len(M)):
@@ -93,9 +105,15 @@ M = [[0,0,0,1,0], # 1
 print("relation R:")
 print(np.array(M))
 print("-----------")
-print(f"max {get_max(M)}")
-print(f"min {get_min(M)}")
-
+print(f"greatest element {get_max(M)}")
+print(f"smallest element {get_min(M)}")
+print("Reverse relation:")
+print(np.array(get_reverse(M)))
+print("Addative relation:")
+print(np.array(get_addative(M)))
+print("Strict relation:")
+print(np.array(get_strict(M)))
+print("--------------------------------------------------")
 print(f'R {"is" if is_reflexive(M) else "is not"} reflexive')
 print(f'R {"is" if is_antireflexive(M) else "is not"} antireflexive')
 print(f'R {"is" if is_symmetrical(M) else "is not"} symmetrical')
